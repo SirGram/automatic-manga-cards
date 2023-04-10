@@ -1,23 +1,34 @@
 import json
+import sys
 from PIL import Image
 import os
 import subprocess
 import get_csv
-
-
-# Full page/vignette
-is_fullpage = False
+import shutil
 
 # Folder config
-manga_name = "Oyasumi"
-
-input_folder = f'./input/{manga_name}/'
-output_folder = f'./output/{manga_name}/'
-kumiko_json = './output.json'
-kumiko_folder = "./kumiko"
-mokuro_path = f".output/_ocr/{manga_name}/"
-
+manga_name = ""
+input_folder = ""
+output_folder = ""
+kumiko_json = ""
+kumiko_folder =""
+mokuro_path = ""
 num_screenshots=0
+
+is_fullpage = False
+
+
+def get_folder(manga_name):
+    global input_folder
+    global output_folder
+    global kumiko_json
+    global kumiko_folder
+    global mokuro_path
+    input_folder = f'./input/{manga_name}/'
+    output_folder = f'./output/{manga_name}/'
+    kumiko_json = './output.json'
+    kumiko_folder = "./kumiko"
+    mokuro_path = f".output/_ocr/{manga_name}/"
 
 
 def compress():
@@ -36,49 +47,68 @@ def compress():
 
 if __name__ == '__main__':
 
-    with open(kumiko_json, 'w') as f:
-        f.write("")
-    print("Going through kumiko...")
-    os.chdir(kumiko_folder)
-    command = ["py","kumiko", "-i", f".{input_folder}","-o",f".{kumiko_json}", "--rtl"]
-    subprocess.run(command, check=True)
-    os.chdir("../")
+    # Get manga name
+    if len(sys.argv) > 1:
+        manga_name = sys.argv[1]
+        # Full page/vignette
+        if "--fullpage" in sys.argv:
+            is_fullpage = True
+    get_folder(manga_name)
 
-    print("Making screenshots...")
-    # Load the JSON file
-    with open(kumiko_json, 'r') as f:
-        data = json.load(f)
+    if is_fullpage == False:
 
-    for image in data:
+        with open(kumiko_json, 'w') as f:
+            f.write("")
+        print("Going through kumiko...")
+        os.chdir(kumiko_folder)
+        command = ["py","kumiko", "-i", f".{input_folder}","-o",f".{kumiko_json}", "--rtl"]
+        subprocess.run(command, check=True)
+        os.chdir("../")
 
-        # Open the image file
-        filename = image['filename']
+        print("Making screenshots...")
+        # Load the JSON file
+        with open(kumiko_json, 'r') as f:
+            data = json.load(f)
 
-        # Extract the screenshot coordinates
-        panels = image['panels']
+        for image in data:
 
-        # Screenshot per panel
-        for panel in panels:
+            # Open the image file
+            filename = image['filename']
 
-            img = Image.open(input_folder + filename)
+            # Extract the screenshot coordinates
+            panels = image['panels']
 
-            x, y, w, h = panels[panels.index(panel)]
+            # Screenshot per panel
+            for panel in panels:
 
-            if is_fullpage== False:
+                img = Image.open(input_folder + filename)
+
+                x, y, w, h = panels[panels.index(panel)]
+
+
                 screenshot = img.crop((x, y, x + w, y + h))
-            else:
-                screenshot = img
 
-            # Create output folder
+
+                # Create output folder
+                if not os.path.exists(output_folder):
+                    os.makedirs(output_folder)
+
+                new_filename = filename.replace('.jpg', '').replace('.png', '')
+                screenshot.save(output_folder + manga_name + new_filename + '_'+str(image['panels'].index(panel)) + '.png')
+                num_screenshots+=1
+
+            print(f"\r{str(data.index(image))}/{str(len(data))} pages. {num_screenshots} screenshots. ", end="")
+        print('Saved in ' + output_folder+'. Saved '+ str(num_screenshots) +' images.')
+    else:
+        print("Copying files to output...")
+        file_list = os.listdir(input_folder)
+
+        for file_name in file_list:
             if not os.path.exists(output_folder):
                 os.makedirs(output_folder)
-
-            new_filename = filename.replace('.jpg', '').replace('.png', '')
-            screenshot.save(output_folder + manga_name + new_filename + '_'+str(image['panels'].index(panel)) + '.png')
-            num_screenshots+=1
-
-        print(f"\r{str(data.index(image))}/{str(len(data))} pages. {num_screenshots} screenshots. ", end="")
-    print('Saved in ' + output_folder+'. Saved '+ str(num_screenshots) +' images.')
+            source_file = os.path.join(input_folder, file_name)
+            destination_file = os.path.join(output_folder, file_name)
+            shutil.copy(source_file, destination_file)
 
     compress()
 
