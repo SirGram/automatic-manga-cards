@@ -1,5 +1,6 @@
 # automatic_manga_cards
 Makes prebuilt japanese manga anki decks. 
+
 Uses kumiko for slicing iamges and mokuro for getting sentences.
 
 # Installation
