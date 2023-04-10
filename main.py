@@ -9,7 +9,7 @@ import get_csv
 is_fullpage = False
 
 # Folder config
-manga_name = "Chobits-01"
+manga_name = "Oyasumi"
 
 input_folder = f'./input/{manga_name}/'
 output_folder = f'./output/{manga_name}/'
