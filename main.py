@@ -17,7 +17,6 @@ num_screenshots=0
 
 is_fullpage = False
 
-
 def get_folder(manga_name):
     global input_folder
     global output_folder
@@ -29,7 +28,6 @@ def get_folder(manga_name):
     kumiko_json = './output.json'
     kumiko_folder = "./kumiko"
     mokuro_path = f".output/_ocr/{manga_name}/"
-
 
 def compress():
     print("Compressing images...")
@@ -85,9 +83,7 @@ if __name__ == '__main__':
 
                 x, y, w, h = panels[panels.index(panel)]
 
-
                 screenshot = img.crop((x, y, x + w, y + h))
-
 
                 # Create output folder
                 if not os.path.exists(output_folder):
