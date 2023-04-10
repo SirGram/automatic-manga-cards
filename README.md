@@ -25,5 +25,5 @@ python main.py <manga_name>
 ```
 Output files:
 + .csv for importing into anki
-+ images for pasting into .collection-media
++ images for pasting into /collection.media
 
