@@ -2,7 +2,12 @@
 Makes prebuilt japanese manga anki decks. 
 Uses kumiko for slicing images and mokuro for getting sentences.
 
-<img width="359" alt="image" src="https://user-images.githubusercontent.com/119138378/231002272-839d4d2e-dd9e-4602-ad63-467e179e5880.png">
+<kbd><img height = "400" src = "https://user-images.githubusercontent.com/119138378/231021244-6ca0f7ee-9bda-4505-ba5c-03e40d77a803.png"><img height = "400" src = "https://user-images.githubusercontent.com/119138378/231022185-5df3cc14-1bfb-4f76-a693-6878496f7842.png"></kbd>
+
+
+
+
+
 Generated card with custom template using morphman plus furigana, translate addons.
 
 # Installation
