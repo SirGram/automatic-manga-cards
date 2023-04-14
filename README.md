@@ -4,11 +4,10 @@ Uses kumiko for slicing images and mokuro for getting sentences.
 
 <kbd><img height = "400" src = "https://user-images.githubusercontent.com/119138378/231021244-6ca0f7ee-9bda-4505-ba5c-03e40d77a803.png"><img height = "400" src = "https://user-images.githubusercontent.com/119138378/231022185-5df3cc14-1bfb-4f76-a693-6878496f7842.png"></kbd>
 
-
-
-
-
 Generated card with custom template using morphman plus furigana, translate addons.
+
+Tutorial:
+{% include youtube.html id="l906iH0R_cM" %}
 
 # Installation
 You need Python 3.6, 3.7, 3.8 or 3.9.
