@@ -7,6 +7,7 @@ Uses kumiko for slicing images and mokuro for getting sentences.
 Generated card with custom template using morphman plus furigana, translate addons.
 
 Tutorial:
+
 {% include youtube.html id="l906iH0R_cM" %}
 
 # Installation
