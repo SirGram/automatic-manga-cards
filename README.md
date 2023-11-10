@@ -6,11 +6,6 @@ Uses kumiko for slicing images and mokuro for getting sentences.
 
 Generated card with custom template using morphman plus furigana, translate addons.
 
-# Video Tutorial
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=l906iH0R_cM" target="_blank">
- <img src="http://img.youtube.com/vi/l906iH0R_cM/maxresdefault.jpg" alt="Watch tut"  height="305"  />
-</a>
-
 
 # Installation
 You need Python 3.6, 3.7, 3.8 or 3.9.
